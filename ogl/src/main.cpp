@@ -146,7 +146,7 @@ int WINAPI WinMain(
 			glClearColor( 0.0f, 0.0f, 0.0f, 1.0f);
 			glClear( GL_COLOR_BUFFER_BIT );
 
-			glDrawArrays(GL_TRIANGLE_STRIP,0,1);
+			glDrawArrays(GL_TRIANGLE_STRIP,0,4);
 			printf("rendering frame...\n");
 
 			SwapBuffers( hDC );
