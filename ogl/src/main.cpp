@@ -1,6 +1,5 @@
 #include <Windows.h>
-#include <gl/gl.h>
-#include <gl/GLU.h>
+#include <gl/glew.h>
 #include <stdio.h>
 
 char const g_szClassName[] = "ogl";
@@ -106,6 +105,29 @@ int WINAPI WinMain(
 
 	EnableOpenGL( hWnd, &hDC, &hRC);
 
+
+
+	//Init
+
+	GLuint vao, vbo;
+	GLfloat const diamond[4][2] = {
+    {  0.0,  1.0  }, /* Top point */
+    {  1.0,  0.0  }, /* Right point */
+    {  0.0, -1.0  }, /* Bottom point */
+    { -1.0,  0.0  } }; /* Left point */
+ 
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
+
+	glGenBuffers(1, &vbo);
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+
+	glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(GLfloat), diamond, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(0);
+
+
 	bool quit = false;
 	float theta = 0.0f;
 	
@@ -123,17 +145,7 @@ int WINAPI WinMain(
 			glClearColor( 0.0f, 0.0f, 0.0f, 0.0f);
 			glClear( GL_COLOR_BUFFER_BIT );
 
-			glPushMatrix();
-			glRotatef( theta, 0.0f, 0.0f, 1.0f );
-			glBegin( GL_TRIANGLES );
-			glColor3f( 1.0f, 0.0f, 0.0f ); 
-			glVertex2f( 0.0f, 1.0f );
-			glColor3f( 0.0f, 1.0f, 0.0f ); 
-			glVertex2f( 0.87f, -0.5f );
-			glColor3f( 0.0f, 0.0f, 1.0f ); 
-			glVertex2f( -0.87f, -0.5f );
-			glEnd();
-			glPopMatrix();
+			glDrawArrays(GL_TRIANGLE_STRIP,0,1);
 
 			SwapBuffers( hDC );
 
