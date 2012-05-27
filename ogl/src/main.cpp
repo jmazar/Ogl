@@ -10,7 +10,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     switch(msg)
     {
         case WM_CLOSE:
-            DestroyWindow(hwnd);
+            PostQuitMessage(0);
         break;
         case WM_DESTROY:
             PostQuitMessage(0);
@@ -21,6 +21,38 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
+void EnableOpenGL(HWND hWnd, HDC * hDC, HGLRC * hRC)
+{
+	PIXELFORMATDESCRIPTOR pfd;
+	int format;
+	
+	// get the device context (DC)
+	*hDC = GetDC( hWnd );
+	
+	// set the pixel format for the DC
+	ZeroMemory( &pfd, sizeof( pfd ) );
+	pfd.nSize = sizeof( pfd );
+	pfd.nVersion = 1;
+	pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
+	pfd.iPixelType = PFD_TYPE_RGBA;
+	pfd.cColorBits = 24;
+	pfd.cDepthBits = 16;
+	pfd.iLayerType = PFD_MAIN_PLANE;
+	format = ChoosePixelFormat( *hDC, &pfd );
+	SetPixelFormat( *hDC, format, &pfd );
+	
+	// create and enable the render context (RC)
+	*hRC = wglCreateContext( *hDC );
+	wglMakeCurrent( *hDC, *hRC );
+	
+}
+
+void DisableOpenGL(HWND hWnd, HDC hDC, HGLRC hRC)
+{
+	wglMakeCurrent( NULL, NULL );
+	wglDeleteContext( hRC );
+	ReleaseDC( hWnd, hDC );
+}
 
 int WINAPI WinMain(
 	HINSTANCE hInstance,
@@ -69,10 +101,32 @@ int WINAPI WinMain(
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
-	while(GetMessage( &msg, NULL, 0, 0) > 0) {
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+	HDC hDC;
+	HGLRC hRC;
+
+	EnableOpenGL( hWnd, &hDC, &hRC);
+
+	bool quit = false;
+	
+	while( !quit ) {
+		if( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) ) {
+			if( WM_QUIT == msg.message ) {
+				quit = true;
+			}
+			else {
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+		else {
+			glClearColor( 0.0f, 1.0f, 0.0f, 0.0f);
+			glClear( GL_COLOR_BUFFER_BIT );
+			SwapBuffers( hDC );
+		}
 	}
 
+	DisableOpenGL( hWnd, hDC, hRC );
+
+	DestroyWindow( hWnd );
 	return msg.wParam;
 }
