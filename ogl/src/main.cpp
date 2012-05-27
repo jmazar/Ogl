@@ -104,6 +104,7 @@ int WINAPI WinMain(
 	HGLRC hRC;
 
 	EnableOpenGL( hWnd, &hDC, &hRC);
+	glewInit();
 
 
 
@@ -142,7 +143,7 @@ int WINAPI WinMain(
 			}
 		}
 		else {
-			glClearColor( 0.0f, 0.0f, 0.0f, 0.0f);
+			glClearColor( 0.0f, 0.0f, 0.0f, 1.0f);
 			glClear( GL_COLOR_BUFFER_BIT );
 
 			glDrawArrays(GL_TRIANGLE_STRIP,0,1);
