@@ -2,6 +2,7 @@
 #define SHADER_H
 
 #include <string>
+#include <gl/glew.h>
 
 class Shader {
 public:
@@ -12,13 +13,14 @@ public:
 	void LoadShaderFromFile(std::string const & fileName);
 	void CompileShader(GLuint shaderType);
 	void AttachToProgram(GLuint program);
-	void BindAttributeLocation(GLuint program, GLuint index, std::string const & location);
 		
 private:
 	Shader(Shader const & shader);
-	Shade & operator=(Shader const & rhs);
+	Shader & operator=(Shader const & rhs);
 
-
+  std::string m_shaderSource;
+  GLuint      m_shader;
+  GLuint      m_program;
 };
 
 #endif
