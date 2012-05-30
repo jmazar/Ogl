@@ -4,6 +4,9 @@
     <Filter Include="src">
       <UniqueIdentifier>{783eef99-9b41-4015-862e-a5a07cadae27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\shaders">
+      <UniqueIdentifier>{d8acba0d-72e7-4075-a83c-9c3f2f3c0bb5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -17,5 +20,13 @@
     <ClInclude Include="src\shader.h">
       <Filter>src</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\shaders\fragment.glsl">
+      <Filter>src\shaders</Filter>
+    </None>
+    <None Include="src\shaders\vertex.glsl">
+      <Filter>src\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

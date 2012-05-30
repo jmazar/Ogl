@@ -1,6 +1,7 @@
 #include <Windows.h>
 #include <gl/glew.h>
 #include <stdio.h>
+#include "shader.h"
 
 char const g_szClassName[] = "ogl";
 
@@ -127,6 +128,29 @@ int WINAPI WinMain(
 	glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(GLfloat), diamond, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
+
+  //Shader stuff
+
+  GLuint program;
+  Shader fragmentShader;
+  Shader vertexShader;
+
+  vertexShader.LoadShaderFromFile("src\\shaders\\vertex.glsl");
+  vertexShader.CompileShader(GL_VERTEX_SHADER);
+  
+  fragmentShader.LoadShaderFromFile("src\\shaders\\fragment.glsl");
+  fragmentShader.CompileShader(GL_FRAGMENT_SHADER);
+
+  program = glCreateProgram();
+
+  vertexShader.AttachToProgram(program);
+  fragmentShader.AttachToProgram(program);
+
+  glBindAttribLocation(program, 0, "in_Position");
+
+  glLinkProgram(program);
+  
+  glUseProgram(program);
 
 
 	bool quit = false;

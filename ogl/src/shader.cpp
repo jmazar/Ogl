@@ -2,12 +2,10 @@
 #include <fstream>
 
 Shader::Shader() :
-  m_shaderSource(NULL),
   m_shader(0) {
 }
 
 Shader::Shader(std::string const & fileName) :
-  m_shaderSource(NULL),
   m_shader(0) {
     LoadShaderFromFile(fileName);
 }
@@ -20,15 +18,23 @@ Shader::~Shader() {
 void Shader::LoadShaderFromFile(std::string const & fileName) {
   std::ifstream file;
   file.open(fileName);
+  if(!file.good()) {
+    printf("Error opening file!\n");
+    return;
+  }
 
   m_shaderSource.assign((std::istreambuf_iterator<char>(file)), 
     std::istreambuf_iterator<char>());
+
+  file.close();
 }
 
 void Shader::CompileShader(GLenum shaderType) {
   m_shader = glCreateShader(shaderType);
 
-  glShaderSource(m_shader, 1, (const GLchar**)m_shaderSource.c_str(), 0);
+  char const * source = m_shaderSource.c_str();
+
+  glShaderSource(m_shader, 1, (const GLchar**)&source, 0);
 
   glCompileShader(m_shader);
 
