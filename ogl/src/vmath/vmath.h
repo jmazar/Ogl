@@ -473,7 +473,7 @@ public:
 	 */
 	T length() const
 	{
-		return (T) std::sqrt(x * x + y * y);
+		return (T) std::sqrt((double)x * x + y * y);
 	}
 
 	/**
@@ -939,7 +939,7 @@ public:
 	 */
 	bool operator==(const Vector3<T>& rhs) const
 	{
-		return std::fabs(x - rhs.x) < EPSILON && std::fabs(y - rhs.y) < EPSILON && std::fabs(z - rhs.z) < EPSILON;
+		return std::fabs((double)x - rhs.x) < EPSILON && std::fabs((double)y - rhs.y) < EPSILON && std::fabs((double)z - rhs.z) < EPSILON;
 	}
 
 	/**
@@ -969,7 +969,7 @@ public:
 	 */
 	T length() const
 	{
-		return (T) std::sqrt(x * x + y * y + z * z);
+		return (T) std::sqrt((double)x * x + y * y + z * z);
 	}
 
 	/**
@@ -1363,8 +1363,8 @@ public:
 	 */
 	bool operator==(const Vector4<T>& rhs) const
 	{
-		return std::fabs(x - rhs.x) < EPSILON && std::fabs(y - rhs.y) < EPSILON && std::fabs(z - rhs.z) < EPSILON
-				&& std::fabs(w - rhs.w) < EPSILON;
+		return std::fabs((double)x - rhs.x) < EPSILON && std::fabs((double)y - rhs.y) < EPSILON && std::fabs((double)z - rhs.z) < EPSILON
+				&& std::fabs((double)w - rhs.w) < EPSILON;
 	}
 
 	/**
@@ -1484,7 +1484,7 @@ public:
 	 */
 	T length() const
 	{
-		return (T) std::sqrt(x * x + y * y + z * z + w * w);
+		return (T) std::sqrt((double)x * x + y * y + z * z + w * w);
 	}
 
 	/**
@@ -1656,12 +1656,12 @@ public:
 		T zRads(DEG2RAD(zDeg));
 
 		Matrix3<T> ma, mb, mc;
-		float ac = cos(xRads);
-		float as = sin(xRads);
-		float bc = cos(yRads);
-		float bs = sin(yRads);
-		float cc = cos(zRads);
-		float cs = sin(zRads);
+		float ac = cos((double)xRads);
+		float as = sin((double)xRads);
+		float bc = cos((double)yRads);
+		float bs = sin((double)yRads);
+		float cc = cos((double)zRads);
+		float cs = sin((double)zRads);
 
 		ma.at(1, 1) = ac;
 		ma.at(2, 1) = as;
@@ -1746,7 +1746,7 @@ public:
 	{
 		for (int i = 0; i < 9; i++)
 		{
-			if (std::fabs(data[i] - rhs.data[i]) >= EPSILON)
+			if (std::fabs((double)data[i] - rhs.data[i]) >= EPSILON)
 				return false;
 		}
 		return true;
@@ -2152,12 +2152,12 @@ public:
 		T zRads(DEG2RAD(zDeg));
 
 		Matrix4<T> ma, mb, mc;
-		float ac = cos(xRads);
-		float as = sin(xRads);
-		float bc = cos(yRads);
-		float bs = sin(yRads);
-		float cc = cos(zRads);
-		float cs = sin(zRads);
+		float ac = cos((double)xRads);
+		float as = sin((double)xRads);
+		float bc = cos((double)yRads);
+		float bs = sin((double)yRads);
+		float cc = cos((double)zRads);
+		float cs = sin((double)zRads);
 
 		ma.at(1, 1) = ac;
 		ma.at(2, 1) = as;
@@ -2408,7 +2408,7 @@ public:
 	{
 		for (int i = 0; i < 16; i++)
 		{
-			if (std::fabs(data[i] - rhs.data[i]) >= EPSILON
+			if (std::fabs((double)data[i] - rhs.data[i]) >= EPSILON
 				)
 				return false;
 		}
