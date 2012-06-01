@@ -7,6 +7,12 @@
     <Filter Include="src\shaders">
       <UniqueIdentifier>{d8acba0d-72e7-4075-a83c-9c3f2f3c0bb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\vmath">
+      <UniqueIdentifier>{1df95339-0925-4c84-a2a1-612f389796b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\models">
+      <UniqueIdentifier>{337cc588-ab2d-4101-a446-a6c9182ab728}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -21,6 +27,12 @@
     <ClCompile Include="src\vertex_shader.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\obj_loader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vmath\vmath.cpp">
+      <Filter>src\vmath</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\shader.h">
@@ -31,6 +43,12 @@
     </ClInclude>
     <ClInclude Include="src\fragment_shader.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\obj_loader.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vmath\vmath.h">
+      <Filter>src\vmath</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

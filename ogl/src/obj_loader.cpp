@@ -33,7 +33,5 @@ void load_obj(
       indices.push_back(b); 
       indices.push_back(c);
     }
-    else if (line[0] == '#') { /* ignoring this line */ }
-    else { /* ignoring this line */ }
   }
 }

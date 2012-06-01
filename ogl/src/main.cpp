@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "vertex_shader.h"
 #include "fragment_shader.h"
+#include "obj_loader.h"
 
 char const g_szClassName[] = "ogl";
 
@@ -109,15 +110,15 @@ int WINAPI WinMain(
 	glewInit();
 
 
+  //Loading an obj.
+  std::vector<Vector3f> vertices;
+  std::vector<GLushort> indices;
+
+  load_obj("src\\models\\triangle.obj", vertices, indices);
 
 	//Init
 
 	GLuint vao, vbo;
-	GLfloat const diamond[4][2] = {
-    {  0.0,  1.0  }, /* Top point */
-    {  1.0,  0.0  }, /* Right point */
-    {  0.0, -1.0  }, /* Bottom point */
-    { -1.0,  0.0  } }; /* Left point */
  
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -126,8 +127,8 @@ int WINAPI WinMain(
 
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 
-	glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(GLfloat), diamond, GL_STATIC_DRAW);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vector3f), vertices.data(), GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
 
   //Shader stuff

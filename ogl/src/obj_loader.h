@@ -8,7 +8,7 @@
 
 void load_obj(
       std::string const & fileName, 
-      std::vector<Vector3f> & verticies, 
-      std::vector<GLushort> & faces); 
+      std::vector<Vector3f> & vertices, 
+      std::vector<GLushort> & indices); 
 
 #endif
