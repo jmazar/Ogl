@@ -143,11 +143,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\fragment_shader.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\shader.cpp" />
+    <ClCompile Include="src\vertex_shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\fragment_shader.h" />
     <ClInclude Include="src\shader.h" />
+    <ClInclude Include="src\vertex_shader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\fragment.glsl" />

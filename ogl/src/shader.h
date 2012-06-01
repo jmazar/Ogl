@@ -7,20 +7,24 @@
 class Shader {
 public:
 	Shader();
-	Shader(std::string const & fileName);
 	virtual ~Shader();
 
-	void LoadShaderFromFile(std::string const & fileName);
-	void CompileShader(GLuint shaderType);
+	virtual void CreateShaderFromFile(std::string const & fileName) = 0;
 	void AttachToProgram(GLuint program);
+  void DetachFromProgram(GLuint program);
 		
+protected:
+  void CompileShader();
+  void LoadShaderSource(std::string const & fileName);
+
+  std::string m_shaderSource;
+  GLuint      m_shader;
+
 private:
 	Shader(Shader const & shader);
 	Shader & operator=(Shader const & rhs);
 
-  std::string m_shaderSource;
-  GLuint      m_shader;
-  GLuint      m_program;
 };
+
 
 #endif

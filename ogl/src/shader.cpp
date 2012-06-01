@@ -5,17 +5,11 @@ Shader::Shader() :
   m_shader(0) {
 }
 
-Shader::Shader(std::string const & fileName) :
-  m_shader(0) {
-    LoadShaderFromFile(fileName);
-}
-
 Shader::~Shader() {
-  glDetachShader(m_program, m_shader);
   glDeleteShader(m_shader);
 }
 
-void Shader::LoadShaderFromFile(std::string const & fileName) {
+void Shader::LoadShaderSource(std::string const & fileName) {
   std::ifstream file;
   file.open(fileName);
   if(!file.good()) {
@@ -29,9 +23,7 @@ void Shader::LoadShaderFromFile(std::string const & fileName) {
   file.close();
 }
 
-void Shader::CompileShader(GLenum shaderType) {
-  m_shader = glCreateShader(shaderType);
-
+void Shader::CompileShader() {
   char const * source = m_shaderSource.c_str();
 
   glShaderSource(m_shader, 1, (const GLchar**)&source, 0);
@@ -47,6 +39,9 @@ void Shader::CompileShader(GLenum shaderType) {
 }
 
 void Shader::AttachToProgram(GLuint program) {
-  m_program = program;
   glAttachShader(program, m_shader);
+}
+
+void Shader::DetachFromProgram(GLuint program) {
+  glDetachShader(program, m_shader);
 }

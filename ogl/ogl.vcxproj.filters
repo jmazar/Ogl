@@ -15,9 +15,21 @@
     <ClCompile Include="src\shader.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\fragment_shader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vertex_shader.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\shader.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vertex_shader.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fragment_shader.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

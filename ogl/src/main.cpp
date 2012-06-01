@@ -1,7 +1,8 @@
 #include <Windows.h>
 #include <gl/glew.h>
 #include <stdio.h>
-#include "shader.h"
+#include "vertex_shader.h"
+#include "fragment_shader.h"
 
 char const g_szClassName[] = "ogl";
 
@@ -132,14 +133,12 @@ int WINAPI WinMain(
   //Shader stuff
 
   GLuint program;
-  Shader fragmentShader;
-  Shader vertexShader;
+  FragmentShader fragmentShader;
+  VertexShader vertexShader;
 
-  vertexShader.LoadShaderFromFile("src\\shaders\\vertex.glsl");
-  vertexShader.CompileShader(GL_VERTEX_SHADER);
+  vertexShader.CreateShaderFromFile("src\\shaders\\vertex.glsl");
   
-  fragmentShader.LoadShaderFromFile("src\\shaders\\fragment.glsl");
-  fragmentShader.CompileShader(GL_FRAGMENT_SHADER);
+  fragmentShader.CreateShaderFromFile("src\\shaders\\fragment.glsl");
 
   program = glCreateProgram();
 
