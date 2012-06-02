@@ -114,7 +114,7 @@ int WINAPI WinMain(
   std::vector<Vector3f> vertices;
   std::vector<GLushort> indices;
 
-  load_obj("src\\models\\triangle.obj", vertices, indices);
+  load_obj("src\\models\\triangle.mesh", vertices, indices);
 
 	//Init
 
@@ -175,8 +175,8 @@ int WINAPI WinMain(
 			glClear( GL_COLOR_BUFFER_BIT );
 
 			//glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-			//glDrawRangeElements(GL_TRIANGLES, 0, 3, 3, GL_UNSIGNED_SHORT, 0);
-			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, NULL);
+      glDrawRangeElements(GL_TRIANGLES, 0, indices.size() - 1, indices.size(), GL_UNSIGNED_SHORT, 0);
+			//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, NULL);
 
 			SwapBuffers( hDC );
 		}
