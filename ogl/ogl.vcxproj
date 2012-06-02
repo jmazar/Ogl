@@ -148,16 +148,33 @@
     <ClCompile Include="src\obj_loader.cpp" />
     <ClCompile Include="src\shader.cpp" />
     <ClCompile Include="src\vertex_shader.cpp" />
-    <ClCompile Include="src\vmath\vmath.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\fragment_shader.h" />
     <ClInclude Include="src\obj_loader.h" />
     <ClInclude Include="src\shader.h" />
     <ClInclude Include="src\vertex_shader.h" />
-    <ClInclude Include="src\vmath\vmath.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\Eigen\Array" />
+    <None Include="src\Eigen\Cholesky" />
+    <None Include="src\Eigen\Core" />
+    <None Include="src\Eigen\Dense" />
+    <None Include="src\Eigen\Eigen" />
+    <None Include="src\Eigen\Eigen2Support" />
+    <None Include="src\Eigen\Eigenvalues" />
+    <None Include="src\Eigen\Geometry" />
+    <None Include="src\Eigen\Householder" />
+    <None Include="src\Eigen\Jacobi" />
+    <None Include="src\Eigen\LeastSquares" />
+    <None Include="src\Eigen\LU" />
+    <None Include="src\Eigen\QR" />
+    <None Include="src\Eigen\QtAlignedMalloc" />
+    <None Include="src\Eigen\Sparse" />
+    <None Include="src\Eigen\StdDeque" />
+    <None Include="src\Eigen\StdList" />
+    <None Include="src\Eigen\StdVector" />
+    <None Include="src\Eigen\SVD" />
     <None Include="src\shaders\fragment.glsl" />
     <None Include="src\shaders\vertex.glsl" />
   </ItemGroup>

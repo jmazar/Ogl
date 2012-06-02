@@ -1,11 +1,13 @@
 #include "obj_loader.h"
 
 #include <fstream>
+#include <iostream>
+#include <sstream>
 
 
 void load_obj(
     std::string const & fileName, 
-    std::vector<Vector3f> & vertices, 
+    std::vector<Eigen::Vector3f> & vertices, 
     std::vector<GLushort> & indices) {
   
   std::ifstream in(fileName, std::ios::in);
@@ -15,10 +17,10 @@ void load_obj(
   while (getline(in, line)) {
     if (line.substr(0,2) == "v ") {
       std::istringstream s(line.substr(2));
-      Vector3f v; 
-      s >> v.x; 
-      s >> v.y; 
-      s >> v.z;
+      Eigen::Vector3f v; 
+      s >> v(0); 
+      s >> v(1); 
+      s >> v(2);
       vertices.push_back(v);
     }  else if (line.substr(0,2) == "f ") {
       std::istringstream s(line.substr(2));

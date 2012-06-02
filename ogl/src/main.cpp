@@ -111,7 +111,7 @@ int WINAPI WinMain(
 
 
   //Loading an obj.
-  std::vector<Vector3f> vertices;
+  std::vector<Eigen::Vector3f> vertices;
   std::vector<GLushort> indices;
 
   load_obj("src\\models\\triangle.mesh", vertices, indices);
@@ -125,7 +125,7 @@ int WINAPI WinMain(
 
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vector3f), vertices.data(), GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Eigen::Vector3f), vertices.data(), GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
