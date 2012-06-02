@@ -4,7 +4,7 @@
 #include "vertex_shader.h"
 #include "fragment_shader.h"
 #include "obj_loader.h"
-
+#define BUFFER_OFFSET(i) ((char *)NULL + (i))
 char const g_szClassName[] = "ogl";
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -118,18 +118,22 @@ int WINAPI WinMain(
 
 	//Init
 
-	GLuint vao, vbo;
- 
+	GLuint vao, vbo, ibo;
+
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
 	glGenBuffers(1, &vbo);
-
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
   glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vector3f), vertices.data(), GL_STATIC_DRAW);
+
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
+
+	glGenBuffers(1, &ibo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLushort), indices.data(), GL_STATIC_DRAW);
+
 
   //Shader stuff
 
@@ -170,7 +174,9 @@ int WINAPI WinMain(
 			glClearColor( 0.0f, 0.0f, 0.0f, 1.0f);
 			glClear( GL_COLOR_BUFFER_BIT );
 
-			glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+			//glDrawArrays(GL_TRIANGLE_STRIP,0,4);
+			//glDrawRangeElements(GL_TRIANGLES, 0, 3, 3, GL_UNSIGNED_SHORT, 0);
+			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, NULL);
 
 			SwapBuffers( hDC );
 		}
