@@ -153,13 +153,17 @@ int WINAPI WinMain(
 
   glBindAttribLocation(program, 0, "in_Position");
 
-	Eigen::Affine3f mvpm;
-	mvpm = Eigen::Translation3f(Eigen::Vector3f(5.0, 0.0, 0.0));
-	glUniformMatrix4fv(glGetUniformLocation(program, "ModelViewMatrix"), 1, GL_FALSE, mvpm.data());
+  
   glLinkProgram(program);
   
   glUseProgram(program);
 
+  //Setting uniforms
+
+  Eigen::Matrix4f mvpm;
+  mvpm.setIdentity();
+  mvpm(3,0) = 1.5;
+	glUniformMatrix4fv(glGetUniformLocation(program, "ModelViewMatrix"), 1, GL_TRUE, mvpm.data());
 
 	bool quit = false;
 	float theta = 0.0f;

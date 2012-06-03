@@ -1,8 +1,10 @@
 #version 150
-uniform mat3 ModelViewMatrix;
+uniform float move;
+uniform mat4 ModelViewMatrix;
+uniform mat4 ModelViewProjectionMatrix;
 
-in vec3 in_Position;
+in vec4 in_Position;
 
 void main(void) {
-  gl_Position = gl_Projection * ModelViewMatrix * gl_Vertex;
+  gl_Position = ModelViewMatrix * in_Position;
 }
