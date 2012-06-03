@@ -4,7 +4,8 @@
 #include "vertex_shader.h"
 #include "fragment_shader.h"
 #include "obj_loader.h"
-#define BUFFER_OFFSET(i) ((char *)NULL + (i))
+#include "Eigen\Geometry"
+
 char const g_szClassName[] = "ogl";
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -152,6 +153,9 @@ int WINAPI WinMain(
 
   glBindAttribLocation(program, 0, "in_Position");
 
+	Eigen::Affine3f mvpm;
+	mvpm = Eigen::Translation3f(Eigen::Vector3f(5.0, 0.0, 0.0));
+	glUniformMatrix4fv(glGetUniformLocation(program, "ModelViewMatrix"), 1, GL_FALSE, mvpm.data());
   glLinkProgram(program);
   
   glUseProgram(program);
