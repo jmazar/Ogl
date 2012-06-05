@@ -165,6 +165,7 @@ int WINAPI WinMain(
   mvpm(0,0) = 0.2;
   mvpm(1,1) = 0.2;
   mvpm(2,2) = 0.2;
+	mvpm(3,3) = 50.0;
 	glUniformMatrix4fv(glGetUniformLocation(program, "ModelViewMatrix"), 1, GL_TRUE, mvpm.data());
 
 	bool quit = false;
