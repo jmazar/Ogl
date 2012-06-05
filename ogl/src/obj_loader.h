@@ -4,11 +4,11 @@
 #include <string>
 #include <vector>
 #include <gl/glew.h>
-#include "Eigen\Dense"
+#include "glm/glm.hpp"
 
 void load_obj(
       std::string const & fileName, 
-      std::vector<Eigen::Vector3f> & vertices, 
+      std::vector<glm::vec3> & vertices, 
       std::vector<GLushort> & indices); 
 
 #endif

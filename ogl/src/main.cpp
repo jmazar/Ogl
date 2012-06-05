@@ -4,7 +4,8 @@
 #include "vertex_shader.h"
 #include "fragment_shader.h"
 #include "obj_loader.h"
-#include "Eigen\Geometry"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 char const g_szClassName[] = "ogl";
 
@@ -112,7 +113,7 @@ int WINAPI WinMain(
 
 
   //Loading an obj.
-  std::vector<Eigen::Vector3f> vertices;
+  std::vector<glm::vec3> vertices;
   std::vector<GLushort> indices;
 
   load_obj("src\\models\\teapot.mesh", vertices, indices);
@@ -126,7 +127,7 @@ int WINAPI WinMain(
 
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Eigen::Vector3f), vertices.data(), GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
@@ -160,13 +161,8 @@ int WINAPI WinMain(
 
   //Setting uniforms
 
-  Eigen::Matrix4f mvpm;
-  mvpm.setIdentity();
-  mvpm(0,0) = 0.2;
-  mvpm(1,1) = 0.2;
-  mvpm(2,2) = 0.2;
-	mvpm(3,3) = 50.0;
-	glUniformMatrix4fv(glGetUniformLocation(program, "ModelViewMatrix"), 1, GL_TRUE, mvpm.data());
+	glm::mat4 mvpm = glm::scale(glm::mat4(1.0f), glm::vec3(0.2f));
+	glUniformMatrix4fv(glGetUniformLocation(program, "ModelViewMatrix"), 1, GL_TRUE, glm::value_ptr(mvpm));
 
 	bool quit = false;
 	float theta = 0.0f;

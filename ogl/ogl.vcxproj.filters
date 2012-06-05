@@ -10,8 +10,8 @@
     <Filter Include="src\models">
       <UniqueIdentifier>{337cc588-ab2d-4101-a446-a6c9182ab728}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\eigen">
-      <UniqueIdentifier>{c974652a-c046-47ec-b5ef-a7bd6556adff}</UniqueIdentifier>
+    <Filter Include="src\glm">
+      <UniqueIdentifier>{466e17ed-1859-4dc2-bd6c-9c693f359ead}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -44,6 +44,9 @@
     <ClInclude Include="src\obj_loader.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\glm\glm.hpp">
+      <Filter>src\glm</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\fragment.glsl">
@@ -51,63 +54,6 @@
     </None>
     <None Include="src\shaders\vertex.glsl">
       <Filter>src\shaders</Filter>
-    </None>
-    <None Include="src\Eigen\Array">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\Cholesky">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\Core">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\Dense">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\Eigen">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\Eigen2Support">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\Eigenvalues">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\Geometry">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\Householder">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\Jacobi">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\LeastSquares">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\LU">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\QR">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\QtAlignedMalloc">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\Sparse">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\StdDeque">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\StdList">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\StdVector">
-      <Filter>src\eigen</Filter>
-    </None>
-    <None Include="src\Eigen\SVD">
-      <Filter>src\eigen</Filter>
     </None>
   </ItemGroup>
 </Project>

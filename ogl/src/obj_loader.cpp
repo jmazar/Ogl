@@ -7,7 +7,7 @@
 
 void load_obj(
     std::string const & fileName, 
-    std::vector<Eigen::Vector3f> & vertices, 
+    std::vector<glm::vec3> & vertices, 
     std::vector<GLushort> & indices) {
   
   std::ifstream in(fileName, std::ios::in);
@@ -17,10 +17,10 @@ void load_obj(
   while (getline(in, line)) {
     if (line.substr(0,2) == "v ") {
       std::istringstream s(line.substr(2));
-      Eigen::Vector3f v; 
-      s >> v(0); 
-      s >> v(1); 
-      s >> v(2);
+      glm::vec3 v; 
+      s >> v.x;
+      s >> v.y;
+      s >> v.z;
       vertices.push_back(v);
     }  else if (line.substr(0,2) == "f ") {
       std::istringstream s(line.substr(2));
