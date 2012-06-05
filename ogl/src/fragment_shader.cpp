@@ -12,8 +12,6 @@ FragmentShader::FragmentShader(std::string const & fileName) :
 FragmentShader::~FragmentShader() {
 }
 
-void FragmentShader::CreateShaderFromFile(std::string const & fileName) {
-  LoadShaderSource(fileName);
-  m_shader = glCreateShader(GL_FRAGMENT_SHADER);
-  CompileShader();
+GLuint FragmentShader::CreateShader() {
+	return glCreateShader(GL_FRAGMENT_SHADER);
 }

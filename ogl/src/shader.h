@@ -9,7 +9,7 @@ public:
 	Shader();
 	virtual ~Shader();
 
-	virtual void CreateShaderFromFile(std::string const & fileName) = 0;
+	void CreateShaderFromFile(std::string const & fileName);
 	void AttachToProgram(GLuint program);
   void DetachFromProgram(GLuint program);
 		
@@ -21,6 +21,7 @@ protected:
   GLuint      m_shader;
 
 private:
+	virtual GLuint CreateShader() = 0;
 	Shader(Shader const & shader);
 	Shader & operator=(Shader const & rhs);
 

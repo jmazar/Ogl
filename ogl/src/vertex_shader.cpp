@@ -12,8 +12,6 @@ VertexShader::VertexShader(std::string const & fileName) :
 VertexShader::~VertexShader() {
 }
 
-void VertexShader::CreateShaderFromFile(std::string const & fileName) {
-  LoadShaderSource(fileName);
-  m_shader = glCreateShader(GL_VERTEX_SHADER);
-  CompileShader();
+GLuint VertexShader::CreateShader() {
+  return glCreateShader(GL_VERTEX_SHADER);
 }

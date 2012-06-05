@@ -9,6 +9,12 @@ Shader::~Shader() {
   glDeleteShader(m_shader);
 }
 
+void Shader::CreateShaderFromFile(std::string const & fileName) {
+  LoadShaderSource(fileName);
+  m_shader = CreateShader();
+  CompileShader();
+}
+
 void Shader::LoadShaderSource(std::string const & fileName) {
   std::ifstream file;
   file.open(fileName);

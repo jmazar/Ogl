@@ -8,7 +8,8 @@ public:
   VertexShader();
   VertexShader(std::string const & fileName);
   ~VertexShader();
-	void CreateShaderFromFile(std::string const & fileName);
+private:
+	GLuint CreateShader();
 };
 
 #endif

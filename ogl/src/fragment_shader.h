@@ -8,7 +8,8 @@ public:
   FragmentShader();
   FragmentShader(std::string const & fileName);
   ~FragmentShader();
-	void CreateShaderFromFile(std::string const & fileName);
+private:
+	GLuint CreateShader();
 };
 
 
