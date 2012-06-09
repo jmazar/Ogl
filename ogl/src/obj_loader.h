@@ -8,7 +8,8 @@
 
 void load_obj(
       std::string const & fileName, 
-      std::vector<glm::vec3> & vertices, 
+      std::vector<glm::vec4> & vertices, 
+      std::vector<glm::vec3> & normals, 
       std::vector<GLushort> & indices); 
 
 #endif

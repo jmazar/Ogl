@@ -1,5 +1,6 @@
 #include "shader.h"
 #include <fstream>
+#include <iostream>
 
 Shader::Shader() :
   m_shader(0) {
@@ -41,6 +42,17 @@ void Shader::CompileShader() {
   glGetShaderiv(m_shader, GL_COMPILE_STATUS, &isCompiled);
   if(0 == isCompiled) {
     printf("Failed to compile shader!\n");
+    GLint blen = 0;	
+    GLsizei slen = 0;
+
+    glGetShaderiv(m_shader, GL_INFO_LOG_LENGTH , &blen);       
+    if (blen > 1)
+    {
+     GLchar* compiler_log = (GLchar*)malloc(blen);
+     glGetInfoLogARB(m_shader, blen, &slen, compiler_log);
+     std::cerr << "compiler_log:\n" << compiler_log;
+     free (compiler_log);
+    }
   }
 }
 

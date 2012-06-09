@@ -113,24 +113,32 @@ int WINAPI WinMain(
 
 
   //Loading an obj.
-  std::vector<glm::vec3> vertices;
+  std::vector<glm::vec4> vertices;
+  std::vector<glm::vec3> normals;
   std::vector<GLushort> indices;
 
-  load_obj("src\\models\\teapot.mesh", vertices, indices);
+  load_obj("src\\models\\teapot2.mesh", vertices, normals, indices);
 
 	//Init
 
-	GLuint vao, vbo, ibo;
+	GLuint vao, vbo, ibo, nbo;
 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
 
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), vertices.data(), GL_STATIC_DRAW);
+  glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec4), vertices.data(), GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(0);
+
+	glGenBuffers(1, &nbo);
+	glBindBuffer(GL_ARRAY_BUFFER, nbo);
+  glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), normals.data(), GL_STATIC_DRAW);
+
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(1);
 
 	glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
@@ -152,7 +160,8 @@ int WINAPI WinMain(
   vertexShader.AttachToProgram(program);
   fragmentShader.AttachToProgram(program);
 
-  glBindAttribLocation(program, 0, "in_Position");
+  glBindAttribLocation(program, 0, "in_vPosition");
+  glBindAttribLocation(program, 1, "in_vNormal");
 
   
   glLinkProgram(program);
@@ -161,12 +170,24 @@ int WINAPI WinMain(
 
   //Setting uniforms
 
-	glm::mat4 mvpm = glm::scale(glm::mat4(1.0f), glm::vec3(0.2f));
-	glUniformMatrix4fv(glGetUniformLocation(program, "ModelViewMatrix"), 1, GL_TRUE, glm::value_ptr(mvpm));
+  glm::mat4 projectionMatrix = glm::perspective(60.0f, 640.0f / 480.0f, 0.1f, 100.f);
+  glm::mat4 viewMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -50.0f));
+  glm::mat4 modelMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.2f));
+  glm::mat3 normalMatrix(1.0f);
+  glm::mat4 modelViewMatrix = viewMatrix * modelMatrix;
+  glm::mat4 modelViewProjectionMatrix = projectionMatrix * modelViewMatrix;
+	glUniformMatrix4fv(glGetUniformLocation(program, "mvMatrix"), 1, GL_FALSE, glm::value_ptr(modelViewMatrix));
+	glUniformMatrix4fv(glGetUniformLocation(program, "mvpMatrix"), 1, GL_FALSE, glm::value_ptr(modelViewProjectionMatrix));
+
+
+  glm::vec3 vEyeLight(-100.0f, 100.0f, 100.0f);
+  glm::vec4 vDiffuseColor(0.0f, 0.0f, 1.0f, 1.0f);
+  glUniform3fv(glGetUniformLocation(program, "vLightPosition"), 1, glm::value_ptr(vEyeLight));
+  glUniform4fv(glGetUniformLocation(program, "diffuseColor"), 1, glm::value_ptr(vDiffuseColor));
 
 	bool quit = false;
 	float theta = 0.0f;
-	
+
 	while( !quit ) {
 		if( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) ) {
 			if( WM_QUIT == msg.message ) {
@@ -178,11 +199,11 @@ int WINAPI WinMain(
 			}
 		}
 		else {
-			glClearColor( 0.0f, 0.0f, 0.0f, 1.0f);
+			glClearColor( 1.0f, 1.0f, 1.0f, 1.0f);
 			glClear( GL_COLOR_BUFFER_BIT );
 
 			//glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-      glDrawRangeElements(GL_TRIANGLES, 0, indices.size() - 1, indices.size(), GL_UNSIGNED_SHORT, 0);
+	  glDrawRangeElements(GL_TRIANGLES, 0, indices.size() - 1, indices.size(), GL_UNSIGNED_SHORT, 0);
 			//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, NULL);
 
 			SwapBuffers( hDC );
