@@ -168,26 +168,11 @@ int WINAPI WinMain(
   
   glUseProgram(program);
 
-  //Setting uniforms
-
-  glm::mat4 projectionMatrix = glm::perspective(60.0f, 640.0f / 480.0f, 0.1f, 100.f);
-  glm::mat4 viewMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -50.0f));
-  glm::mat4 modelMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.2f));
-  glm::mat4 modelViewMatrix = viewMatrix * modelMatrix;
-  glm::mat4 modelViewProjectionMatrix = projectionMatrix * modelViewMatrix;
-
-	glUniformMatrix4fv(glGetUniformLocation(program, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
-	glUniformMatrix4fv(glGetUniformLocation(program, "mvMatrix"), 1, GL_FALSE, glm::value_ptr(modelViewMatrix));
-	glUniformMatrix4fv(glGetUniformLocation(program, "mvpMatrix"), 1, GL_FALSE, glm::value_ptr(modelViewProjectionMatrix));
-
-
-  glm::vec3 vEyeLight(-100.0f, 100.0f, 100.0f);
-  glm::vec4 vDiffuseColor(0.0f, 0.0f, 1.0f, 1.0f);
-  glUniform3fv(glGetUniformLocation(program, "vLightPosition"), 1, glm::value_ptr(vEyeLight));
-  glUniform4fv(glGetUniformLocation(program, "diffuseColor"), 1, glm::value_ptr(vDiffuseColor));
 
 	bool quit = false;
 	float theta = 0.0f;
+
+  glEnable(GL_DEPTH_TEST);
 
 	while( !quit ) {
 		if( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) ) {
@@ -201,13 +186,32 @@ int WINAPI WinMain(
 		}
 		else {
 			glClearColor( 1.0f, 1.0f, 1.0f, 1.0f);
-			glClear( GL_COLOR_BUFFER_BIT );
+      glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-			//glDrawArrays(GL_TRIANGLE_STRIP,0,4);
-	  glDrawRangeElements(GL_TRIANGLES, 0, indices.size() - 1, indices.size(), GL_UNSIGNED_SHORT, 0);
-			//glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, NULL);
+      //Setting uniforms
+      glm::mat4 projectionMatrix = glm::perspective(60.0f, 640.0f / 480.0f, 0.1f, 100.f);
+      glm::mat4 viewMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -25.0f));
+      glm::mat4 rotateMatrix = glm::rotate(glm::mat4(1.0f), theta, glm::vec3(1.0f, 0.0f, 0.0f));
+      glm::mat4 translateMatrix = glm::translate(rotateMatrix, glm::vec3(0.0f, 0.0f, 0.0f));
+      glm::mat4 modelMatrix = glm::scale(translateMatrix, glm::vec3(0.2f));
+      glm::mat4 modelViewMatrix = viewMatrix * modelMatrix;
+      glm::mat4 modelViewProjectionMatrix = projectionMatrix * modelViewMatrix;
+
+      glUniformMatrix4fv(glGetUniformLocation(program, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
+      glUniformMatrix4fv(glGetUniformLocation(program, "mvMatrix"), 1, GL_FALSE, glm::value_ptr(modelViewMatrix));
+      glUniformMatrix4fv(glGetUniformLocation(program, "mvpMatrix"), 1, GL_FALSE, glm::value_ptr(modelViewProjectionMatrix));
+
+
+      glm::vec3 vEyeLight(-100.0f, 100.0f, 100.0f);
+      glm::vec4 vDiffuseColor(0.0f, 0.0f, 1.0f, 1.0f);
+      glUniform3fv(glGetUniformLocation(program, "vLightPosition"), 1, glm::value_ptr(vEyeLight));
+      glUniform4fv(glGetUniformLocation(program, "diffuseColor"), 1, glm::value_ptr(vDiffuseColor));
+
+      glDrawRangeElements(GL_TRIANGLES, 0, indices.size() - 1, indices.size(), GL_UNSIGNED_SHORT, 0);
 
 			SwapBuffers( hDC );
+      
+      theta += 0.01;
 		}
 	}
 
