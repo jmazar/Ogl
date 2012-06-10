@@ -8,21 +8,14 @@ uniform vec4 diffuseColor;
 in vec4 in_vPosition;
 in vec3 in_vNormal;
 
-smooth out vec4 vVaryingColor;
+smooth out vec3 vNormalW;
+smooth out vec3 vPosW;
 
 void main(void) {
-	vec3 vEyeNormal = mul(modelMatrix, in_vPosition).xyz;
-	vEyeNormal = normalize(vEyeNormal);
+	vNormalW = mul(modelMatrix, vec4(in_vNormal, 1.0)).xyz;
+	vNormalW = normalize(vNormalW);
 
-	vec4 vPosition4 = mvMatrix * in_vPosition;
-	vec3 vPosition3 = vPosition4.xyz / vPosition4.w;
-
-	vec3 vLightDir = normalize(vLightPosition - vPosition3);
-
-	float diff = max(0.0, dot(vEyeNormal, vLightDir));
-
-	vVaryingColor.xyz = diff * diffuseColor.xyz;
-	vVaryingColor.a = 1.0;
+	vPosW = mul(modelMatrix, in_vPosition).xyz;
 
 	gl_Position = mvpMatrix * in_vPosition; 
 }
