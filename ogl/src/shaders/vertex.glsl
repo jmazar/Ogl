@@ -1,8 +1,8 @@
 #version 330
+uniform mat4 modelMatrix;
 uniform mat4 mvMatrix;
 uniform mat4 mvpMatrix;
 uniform vec3 vLightPosition;
-uniform mat3 normalMatrix;
 uniform vec4 diffuseColor;
 
 in vec4 in_vPosition;
@@ -11,7 +11,8 @@ in vec3 in_vNormal;
 smooth out vec4 vVaryingColor;
 
 void main(void) {
-	vec3 vEyeNormal = normalMatrix * in_vNormal;
+	vec3 vEyeNormal = mul(modelMatrix, in_vPosition).xyz;
+	vEyeNormal = normalize(vEyeNormal);
 
 	vec4 vPosition4 = mvMatrix * in_vPosition;
 	vec3 vPosition3 = vPosition4.xyz / vPosition4.w;

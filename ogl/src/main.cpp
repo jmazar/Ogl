@@ -173,9 +173,10 @@ int WINAPI WinMain(
   glm::mat4 projectionMatrix = glm::perspective(60.0f, 640.0f / 480.0f, 0.1f, 100.f);
   glm::mat4 viewMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -50.0f));
   glm::mat4 modelMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.2f));
-  glm::mat3 normalMatrix(1.0f);
   glm::mat4 modelViewMatrix = viewMatrix * modelMatrix;
   glm::mat4 modelViewProjectionMatrix = projectionMatrix * modelViewMatrix;
+
+	glUniformMatrix4fv(glGetUniformLocation(program, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(program, "mvMatrix"), 1, GL_FALSE, glm::value_ptr(modelViewMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(program, "mvpMatrix"), 1, GL_FALSE, glm::value_ptr(modelViewProjectionMatrix));
 
