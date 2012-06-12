@@ -189,20 +189,22 @@ int WINAPI WinMain(
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
       //Setting uniforms
+      glm::vec3 cameraLocation(0.0f, 0.0f, -45.0f);
       glm::mat4 projectionMatrix = glm::perspective(60.0f, 640.0f / 480.0f, 0.1f, 100.f);
-      glm::mat4 viewMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -25.0f));
-      glm::mat4 rotateMatrix = glm::rotate(glm::mat4(1.0f), theta, glm::vec3(1.0f, 0.0f, 0.0f));
+      glm::mat4 viewMatrix = glm::translate(glm::mat4(1.0f), cameraLocation);
+      glm::mat4 rotateMatrix = glm::rotate(glm::mat4(1.0f), theta, glm::vec3(1.0f, 1.0f, 0.0f));
       glm::mat4 translateMatrix = glm::translate(rotateMatrix, glm::vec3(0.0f, 0.0f, 0.0f));
       glm::mat4 modelMatrix = glm::scale(translateMatrix, glm::vec3(0.2f));
       glm::mat4 modelViewMatrix = viewMatrix * modelMatrix;
       glm::mat4 modelViewProjectionMatrix = projectionMatrix * modelViewMatrix;
 
+      glUniform3fv(glGetUniformLocation(program, "vEyeLocation"), 1, glm::value_ptr(cameraLocation));
       glUniformMatrix4fv(glGetUniformLocation(program, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
       glUniformMatrix4fv(glGetUniformLocation(program, "mvMatrix"), 1, GL_FALSE, glm::value_ptr(modelViewMatrix));
       glUniformMatrix4fv(glGetUniformLocation(program, "mvpMatrix"), 1, GL_FALSE, glm::value_ptr(modelViewProjectionMatrix));
 
 
-      glm::vec3 vEyeLight(-100.0f, 100.0f, 100.0f);
+      glm::vec3 vEyeLight(0.0f, 100.0f, 0.0f);
       glm::vec4 vDiffuseColor(0.0f, 0.0f, 1.0f, 1.0f);
       glUniform3fv(glGetUniformLocation(program, "vLightPosition"), 1, glm::value_ptr(vEyeLight));
       glUniform4fv(glGetUniformLocation(program, "diffuseColor"), 1, glm::value_ptr(vDiffuseColor));
