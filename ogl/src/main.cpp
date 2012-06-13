@@ -179,7 +179,7 @@ int WINAPI WinMain(
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLushort), indices.data(), GL_STATIC_DRAW);
 
-  GLuint texture = LoadTexture("src\\textures\\texture.raw", 256, 256);
+  GLuint texture = LoadTexture("src\\textures\\GL.raw", 256, 256);
 
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, texture);
