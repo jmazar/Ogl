@@ -10,6 +10,9 @@ uniform vec3 vEyeLocation;
 
 smooth in vec3 vNormalW;
 smooth in vec3 vPosW;
+in vec2 TexCoord;
+
+uniform sampler2D Texture;
 
 void main(void) {
 	vec3 worldNormal = normalize(vNormalW);
@@ -25,6 +28,7 @@ void main(void) {
 	vec4 specular = t * vec4(0.65, 0.65, 0.25, 1);
 	vec4 diffuse = s * diffuseColor;
 
+	vec3 texColor = vec3(texture(Texture, TexCoord));
 
-	gl_FragColor = specular + diffuse + vec4(0.0, 0.0, 0.02, 1.0);
+	gl_FragColor = vec4(texColor, 1.0) + specular + diffuse + vec4(0.0, 0.0, 0.02, 1.0);
 }
