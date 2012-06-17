@@ -6,6 +6,8 @@
 #include "obj_loader.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 char const g_szClassName[] = "ogl";
 
@@ -150,13 +152,30 @@ int WINAPI WinMain(
   //Loading an obj.
   std::vector<glm::vec4> vertices;
   std::vector<glm::vec3> normals;
+  std::vector<glm::vec2> texCoords;
   std::vector<GLushort> indices;
 
   load_obj("src\\models\\teapot2.mesh", vertices, normals, indices);
 
+  glm::vec3 normalizedVert;
+  float theta, phi;
+  for(auto iterator = vertices.begin(); iterator != vertices.end(); iterator++) {
+    normalizedVert.x = iterator->x / iterator->length();
+    normalizedVert.y = iterator->y / iterator->length();
+    normalizedVert.z = iterator->z / iterator->length();
+
+    theta = acosf(normalizedVert.y);
+    phi = atan2f(normalizedVert.x, normalizedVert.z);
+
+    glm::vec2 uvs;
+    uvs.x = phi / M_PI_2;
+    uvs.y = theta / (2.0f * M_PI);
+    texCoords.push_back(uvs);
+  }
+
 	//Init
 
-	GLuint vao, vbo, ibo, nbo;
+	GLuint vao, vbo, ibo, nbo, tbo;
 
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -175,11 +194,20 @@ int WINAPI WinMain(
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	glEnableVertexAttribArray(1);
 
+  glGenBuffers(1, &tbo);
+  glBindBuffer(GL_ARRAY_BUFFER, tbo);
+  glBufferData(GL_ARRAY_BUFFER, texCoords.size() * sizeof(glm::vec2), texCoords.data(), GL_STATIC_DRAW);
+
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
+  glEnableVertexAttribArray(2);
+
+
 	glGenBuffers(1, &ibo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLushort), indices.data(), GL_STATIC_DRAW);
 
-  GLuint texture = LoadTexture("src\\textures\\GL.raw", 256, 256);
+
+  GLuint texture = LoadTexture("src\\textures\\kickbutt.raw", 256, 256);
 
   glActiveTexture(GL_TEXTURE0);
   glBindTexture(GL_TEXTURE_2D, texture);
@@ -201,6 +229,7 @@ int WINAPI WinMain(
 
   glBindAttribLocation(program, 0, "in_vPosition");
   glBindAttribLocation(program, 1, "in_vNormal");
+  glBindAttribLocation(program, 2, "in_vTexCoord");
 
   
   glLinkProgram(program);
@@ -209,7 +238,7 @@ int WINAPI WinMain(
 
 
 	bool quit = false;
-	float theta = 0.0f;
+	theta = 0.0f;
 
   glEnable(GL_DEPTH_TEST);
 
