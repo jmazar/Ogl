@@ -29,5 +29,5 @@ void main(void) {
 
 	diffuse = diffuse * texture(Texture, vTexCoord);
 
-	gl_FragColor = specular + diffuse + vec4(0.0, 0.0, 0.02, 1.0);
+	gl_FragColor = specular + diffuse;
 }

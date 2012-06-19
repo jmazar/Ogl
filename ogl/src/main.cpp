@@ -6,6 +6,7 @@
 #include "obj_loader.h"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "glm/gtc/swizzle.hpp"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -160,9 +161,8 @@ int WINAPI WinMain(
   glm::vec3 normalizedVert;
   float theta, phi;
   for(auto iterator = vertices.begin(); iterator != vertices.end(); iterator++) {
-    normalizedVert.x = iterator->x / iterator->length();
-    normalizedVert.y = iterator->y / iterator->length();
-    normalizedVert.z = iterator->z / iterator->length();
+    normalizedVert = glm::swizzle<glm::X, glm::Y, glm::Z>(*iterator);
+    normalizedVert = glm::normalize(normalizedVert);
 
     theta = acosf(normalizedVert.y);
     phi = atan2f(normalizedVert.x, normalizedVert.z);
@@ -170,10 +170,14 @@ int WINAPI WinMain(
     glm::vec2 uvs;
     uvs.x = phi / M_PI_2;
     uvs.y = theta / (2.0f * M_PI);
+    uvs.x = (uvs.x > 0.5)?(1.F-uvs.x):(uvs.x);
+    uvs.y = (uvs.y > 0.5)?(1.F-uvs.y):(uvs.y);
+    uvs.y *= 2.0f;
     texCoords.push_back(uvs);
   }
 
 	//Init
+
 
 	GLuint vao, vbo, ibo, nbo, tbo;
 
@@ -209,8 +213,6 @@ int WINAPI WinMain(
 
   GLuint texture = LoadTexture("src\\textures\\kickbutt.raw", 256, 256);
 
-  glActiveTexture(GL_TEXTURE0);
-  glBindTexture(GL_TEXTURE_2D, texture);
 
   //Shader stuff
 
@@ -236,9 +238,11 @@ int WINAPI WinMain(
   
   glUseProgram(program);
 
+  glActiveTexture(GL_TEXTURE0);
+  glBindTexture(GL_TEXTURE_2D, texture);
 
 	bool quit = false;
-	theta = 0.0f;
+  theta = 0.0f;
 
   glEnable(GL_DEPTH_TEST);
 
@@ -275,7 +279,7 @@ int WINAPI WinMain(
 
 
       glm::vec3 vEyeLight(0.0f, 100.0f, 0.0f);
-      glm::vec4 vDiffuseColor(0.0f, 0.0f, 1.0f, 1.0f);
+      glm::vec4 vDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
       glUniform3fv(glGetUniformLocation(program, "vLightPosition"), 1, glm::value_ptr(vEyeLight));
       glUniform4fv(glGetUniformLocation(program, "diffuseColor"), 1, glm::value_ptr(vDiffuseColor));
 
