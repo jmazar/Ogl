@@ -14,18 +14,53 @@
 
 char const g_szClassName[] = "ogl";
 
+float camera_x = 0.0f;
+float camera_y = 0.0f;
+float camera_z = 45.0f;
+
+void HandleKeys(HWND in_hWnd, WPARAM in_wParam) {
+	switch(in_wParam)
+	{
+	case 'B':
+		MessageBox(in_hWnd, "Butts", "b", MB_OK);
+		break;
+	case 'J':
+		camera_z++;
+		break;
+	case 'K':
+		camera_z--;
+		break;
+	case VK_LEFT:
+		camera_x--;
+		break;
+	case VK_RIGHT:
+		camera_x++;
+		break;
+	case VK_UP:
+		camera_y++;
+		break;
+	case VK_DOWN:
+		camera_y--;
+		break;
+
+	}
+}
+
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
     switch(msg)
     {
-        case WM_CLOSE:
-            PostQuitMessage(0);
-        break;
-        case WM_DESTROY:
-            PostQuitMessage(0);
-        break;
-        default:
-            return DefWindowProc(hwnd, msg, wParam, lParam);
+		case WM_KEYDOWN:
+			HandleKeys(hwnd, wParam);
+			break;
+		case WM_CLOSE:
+				PostQuitMessage(0);
+		break;
+		case WM_DESTROY:
+				PostQuitMessage(0);
+		break;
+		default:
+				return DefWindowProc(hwnd, msg, wParam, lParam);
     }
     return 0;
 }
@@ -250,9 +285,6 @@ int WINAPI WinMain(
 
 
 	Camera camera;
-	glm::vec3 eyeLocation(0.0f, 0.0f, 45.0f);
-	camera.SetCameraTranslation(eyeLocation);
-	camera.SetCameraRotation(30, glm::vec3(1.0f, 0.0f, 0.0f));
 
 	while( !quit ) {
 		if( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) ) {
@@ -269,6 +301,9 @@ int WINAPI WinMain(
       glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
       glUniform1i(glGetUniformLocation(program, "Texture"), 0);
+
+			glm::vec3 eyeLocation(camera_x, camera_y, camera_z);
+			camera.SetCameraTranslation(eyeLocation);
 
       //Setting uniforms
       glm::mat4 projectionMatrix = glm::perspective(60.0f, 640.0f / 480.0f, 0.1f, 100.f);
