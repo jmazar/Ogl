@@ -30,6 +30,9 @@
     <ClCompile Include="src\obj_loader.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\camera.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\shader.h">
@@ -46,6 +49,9 @@
     </ClInclude>
     <ClInclude Include="src\glm\glm.hpp">
       <Filter>src\glm</Filter>
+    </ClInclude>
+    <ClInclude Include="src\camera.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

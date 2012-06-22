@@ -10,6 +10,8 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+#include "camera.h"
+
 char const g_szClassName[] = "ogl";
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -246,6 +248,12 @@ int WINAPI WinMain(
 
   glEnable(GL_DEPTH_TEST);
 
+
+	Camera camera;
+	glm::vec3 eyeLocation(0.0f, 0.0f, 45.0f);
+	camera.SetCameraTranslation(eyeLocation);
+	camera.SetCameraRotation(30, glm::vec3(1.0f, 0.0f, 0.0f));
+
 	while( !quit ) {
 		if( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) ) {
 			if( WM_QUIT == msg.message ) {
@@ -263,16 +271,15 @@ int WINAPI WinMain(
       glUniform1i(glGetUniformLocation(program, "Texture"), 0);
 
       //Setting uniforms
-      glm::vec3 cameraLocation(0.0f, 0.0f, -45.0f);
       glm::mat4 projectionMatrix = glm::perspective(60.0f, 640.0f / 480.0f, 0.1f, 100.f);
-      glm::mat4 viewMatrix = glm::translate(glm::mat4(1.0f), cameraLocation);
+			glm::mat4 viewMatrix = camera.GetViewMatrix();
       glm::mat4 rotateMatrix = glm::rotate(glm::mat4(1.0f), theta, glm::vec3(1.0f, 1.0f, 0.0f));
       glm::mat4 translateMatrix = glm::translate(rotateMatrix, glm::vec3(0.0f, 0.0f, 0.0f));
       glm::mat4 modelMatrix = glm::scale(translateMatrix, glm::vec3(0.2f));
       glm::mat4 modelViewMatrix = viewMatrix * modelMatrix;
       glm::mat4 modelViewProjectionMatrix = projectionMatrix * modelViewMatrix;
 
-      glUniform3fv(glGetUniformLocation(program, "vEyeLocation"), 1, glm::value_ptr(cameraLocation));
+			glUniform4fv(glGetUniformLocation(program, "vEyeLocation"), 1, glm::value_ptr(camera.GetEyePosVec()));
       glUniformMatrix4fv(glGetUniformLocation(program, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
       glUniformMatrix4fv(glGetUniformLocation(program, "mvMatrix"), 1, GL_FALSE, glm::value_ptr(modelViewMatrix));
       glUniformMatrix4fv(glGetUniformLocation(program, "mvpMatrix"), 1, GL_FALSE, glm::value_ptr(modelViewProjectionMatrix));

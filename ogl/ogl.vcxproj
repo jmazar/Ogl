@@ -143,6 +143,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\fragment_shader.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\obj_loader.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="src\vertex_shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\fragment_shader.h" />
     <ClInclude Include="src\glm\glm.hpp" />
     <ClInclude Include="src\obj_loader.h" />

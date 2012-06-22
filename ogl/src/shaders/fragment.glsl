@@ -6,7 +6,7 @@ uniform mat4 mvMatrix;
 uniform mat4 mvpMatrix;
 uniform vec3 vLightPosition;
 uniform vec4 diffuseColor;
-uniform vec3 vEyeLocation;
+uniform vec4 vEyeLocation;
 
 smooth in vec3 vNormalW;
 smooth in vec3 vPosW;
@@ -17,7 +17,7 @@ uniform sampler2D Texture;
 void main(void) {
 	vec3 worldNormal = normalize(vNormalW);
 	vec3 vLightDir = normalize(vLightPosition - vPosW);
-	vec3 vToEye = normalize(vEyeLocation - vPosW);
+	vec3 vToEye = normalize(vec3(-vEyeLocation.xyz) - vPosW);
 	vec3 vReflect = normalize(reflect(vLightDir, worldNormal));
 
 	float s = max(0.0, dot(vLightDir, worldNormal));
