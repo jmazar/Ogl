@@ -155,6 +155,7 @@
     <ClInclude Include="src\fragment_shader.h" />
     <ClInclude Include="src\glm\glm.hpp" />
     <ClInclude Include="src\obj_loader.h" />
+    <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\shader.h" />
     <ClInclude Include="src\vertex_shader.h" />
   </ItemGroup>
