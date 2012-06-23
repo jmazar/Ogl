@@ -11,6 +11,7 @@
 #include <math.h>
 
 #include "camera.h"
+#include "renderer.h"
 
 char const g_szClassName[] = "ogl";
 
@@ -63,39 +64,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				return DefWindowProc(hwnd, msg, wParam, lParam);
 		}
 		return 0;
-}
-
-void EnableOpenGL(HWND hWnd, HDC * hDC, HGLRC * hRC)
-{
-	PIXELFORMATDESCRIPTOR pfd;
-	int format;
-	
-	// get the device context (DC)
-	*hDC = GetDC( hWnd );
-	
-	// set the pixel format for the DC
-	ZeroMemory( &pfd, sizeof( pfd ) );
-	pfd.nSize = sizeof( pfd );
-	pfd.nVersion = 1;
-	pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
-	pfd.iPixelType = PFD_TYPE_RGBA;
-	pfd.cColorBits = 24;
-	pfd.cDepthBits = 16;
-	pfd.iLayerType = PFD_MAIN_PLANE;
-	format = ChoosePixelFormat( *hDC, &pfd );
-	SetPixelFormat( *hDC, format, &pfd );
-	
-	// create and enable the render context (RC)
-	*hRC = wglCreateContext( *hDC );
-	wglMakeCurrent( *hDC, *hRC );
-	
-}
-
-void DisableOpenGL(HWND hWnd, HDC hDC, HGLRC hRC)
-{
-	wglMakeCurrent( NULL, NULL );
-	wglDeleteContext( hRC );
-	ReleaseDC( hWnd, hDC );
 }
 
 GLuint LoadTexture( const char * filename, int width, int height )
@@ -180,11 +148,8 @@ int WINAPI WinMain(
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
-	HDC hDC;
-	HGLRC hRC;
-
-	EnableOpenGL( hWnd, &hDC, &hRC);
-	glewInit();
+	Renderer renderer;
+	renderer.Enable(hWnd);
 
 
 	//Loading an obj.
@@ -327,13 +292,13 @@ int WINAPI WinMain(
 
 			glDrawRangeElements(GL_TRIANGLES, 0, indices.size() - 1, indices.size(), GL_UNSIGNED_SHORT, 0);
 
-			SwapBuffers( hDC );
+			renderer.Render();
 			
 			theta += 0.01;
 		}
 	}
 
-	DisableOpenGL( hWnd, hDC, hRC );
+	renderer.Disable(hWnd);
 
 	DestroyWindow( hWnd );
 	return msg.wParam;
