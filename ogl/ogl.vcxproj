@@ -146,6 +146,7 @@
     <ClCompile Include="src\camera.cpp" />
     <ClCompile Include="src\fragment_shader.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\matrix_stack.cpp" />
     <ClCompile Include="src\obj_loader.cpp" />
     <ClCompile Include="src\shader.cpp" />
     <ClCompile Include="src\vertex_shader.cpp" />
@@ -154,8 +155,10 @@
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\fragment_shader.h" />
     <ClInclude Include="src\glm\glm.hpp" />
+    <ClInclude Include="src\matrix_stack.h" />
     <ClInclude Include="src\obj_loader.h" />
     <ClInclude Include="src\renderer.h" />
+    <ClInclude Include="src\scene_graph_node.h" />
     <ClInclude Include="src\shader.h" />
     <ClInclude Include="src\vertex_shader.h" />
   </ItemGroup>

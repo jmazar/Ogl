@@ -33,6 +33,9 @@
     <ClCompile Include="src\camera.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\matrix_stack.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\shader.h">
@@ -54,6 +57,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\renderer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene_graph_node.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\matrix_stack.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
