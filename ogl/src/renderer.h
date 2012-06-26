@@ -14,7 +14,7 @@ public:
 private:
 	HDC m_hDC;
 	HGLRC m_hRC;
-	bool m_initialized;
+	bool m_bInitialized;
 
 };
 

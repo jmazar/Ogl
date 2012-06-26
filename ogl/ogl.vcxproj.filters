@@ -39,6 +39,9 @@
     <ClCompile Include="src\renderer.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\object_node.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\shader.h">
@@ -66,6 +69,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\matrix_stack.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object_node.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,13 +3,13 @@
 Renderer::Renderer() :
 m_hDC(0),
 m_hRC(0),
-m_initialized(false) {
+m_bInitialized(false) {
 }
 
 Renderer::Renderer(HWND hWnd) :
 m_hDC(0),
 m_hRC(0),
-m_initialized(false) {
+m_bInitialized(false) {
 			Enable(hWnd);
 }
 
@@ -17,6 +17,9 @@ Renderer::~Renderer() {
 }
 
 void Renderer::Enable(HWND hWnd) {
+	if(true == m_bInitialized)
+		return;
+
 	PIXELFORMATDESCRIPTOR pfd;
 	int format;
 	
@@ -39,6 +42,11 @@ void Renderer::Enable(HWND hWnd) {
 	m_hRC = wglCreateContext( m_hDC );
 	wglMakeCurrent( m_hDC, m_hRC );
 	glewInit();
+
+	glEnable(GL_DEPTH_TEST);
+
+	m_bInitialized = true;
+
 }
 
 void Renderer::Disable(HWND hWnd) {

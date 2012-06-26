@@ -7,6 +7,7 @@
 
 class ISGNode {
 public:
+	virtual void Draw(float in_delta) = 0;
 
 
 private:
