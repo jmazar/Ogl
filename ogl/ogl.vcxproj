@@ -157,6 +157,7 @@
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\fragment_shader.h" />
     <ClInclude Include="src\glm\glm.hpp" />
+    <ClInclude Include="src\light_node.h" />
     <ClInclude Include="src\matrix_stack.h" />
     <ClInclude Include="src\object_node.h" />
     <ClInclude Include="src\obj_loader.h" />

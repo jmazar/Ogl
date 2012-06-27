@@ -74,6 +74,9 @@
     <ClInclude Include="src\object_node.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\light_node.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\fragment.glsl">
