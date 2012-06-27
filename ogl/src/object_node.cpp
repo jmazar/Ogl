@@ -43,27 +43,27 @@ GLuint LoadTexture( const char * filename, int width, int height )
 		return texture; //return whether it was successfull
 }
 
-void ObjectNode::Draw(float in_delta) {
+void ObjectNode::Draw(float in_delta, Camera const & in_camera) {
 	glUseProgram(m_program);
 
 	glUniform1i(glGetUniformLocation(m_program, "Texture"), 0);
 
-	Camera camera;
-	glm::vec3 eyeLocation(0.0f, 0.0f, 45.0f);
-	camera.SetCameraTranslation(eyeLocation);
-
 	//Setting uniforms
-	glm::mat4 projectionMatrix = glm::perspective(60.0f, 640.0f / 480.0f, 0.1f, 100.f);
-	glm::mat4 viewMatrix = camera.GetViewMatrix();
 	glm::mat4 rotateMatrix = glm::rotate(glm::mat4(1.0f), in_delta, glm::vec3(1.0f, 1.0f, 0.0f));
 	glm::mat4 translateMatrix = glm::translate(rotateMatrix, glm::vec3(0.0f, 0.0f, 0.0f));
 	glm::mat4 modelMatrix = glm::scale(translateMatrix, glm::vec3(0.2f));
-	glm::mat4 modelViewMatrix = viewMatrix * modelMatrix;
-	glm::mat4 modelViewProjectionMatrix = projectionMatrix * modelViewMatrix;
 
-	glUniform4fv(glGetUniformLocation(m_program, "vEyeLocation"), 1, glm::value_ptr(camera.GetEyePosVec()));
+	MatrixStack::Instance()->Push(modelMatrix);
+
+	glm::mat4 modelViewProjectionMatrix = glm::mat4(1.0f);
+
+	std::vector<glm::mat4> const stack = MatrixStack::Instance()->GetStack();
+	for(int i = 0; i < stack.size(); i ++) {
+		modelViewProjectionMatrix = modelViewProjectionMatrix * stack[i];
+	}
+
+	glUniform4fv(glGetUniformLocation(m_program, "vEyeLocation"), 1, glm::value_ptr(in_camera.GetEyePosVec()));
 	glUniformMatrix4fv(glGetUniformLocation(m_program, "modelMatrix"), 1, GL_FALSE, glm::value_ptr(modelMatrix));
-	glUniformMatrix4fv(glGetUniformLocation(m_program, "mvMatrix"), 1, GL_FALSE, glm::value_ptr(modelViewMatrix));
 	glUniformMatrix4fv(glGetUniformLocation(m_program, "mvpMatrix"), 1, GL_FALSE, glm::value_ptr(modelViewProjectionMatrix));
 
 
@@ -74,6 +74,7 @@ void ObjectNode::Draw(float in_delta) {
 
 	glDrawRangeElements(GL_TRIANGLES, 0, m_indices.size() - 1, m_indices.size(), GL_UNSIGNED_SHORT, 0);
 
+	MatrixStack::Instance()->Pop();
 }
 
 void ObjectNode::LoadObj(std::string in_meshLocation) {

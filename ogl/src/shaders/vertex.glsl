@@ -1,6 +1,5 @@
 #version 330
 uniform mat4 modelMatrix;
-uniform mat4 mvMatrix;
 uniform mat4 mvpMatrix;
 
 in vec4 in_vPosition;

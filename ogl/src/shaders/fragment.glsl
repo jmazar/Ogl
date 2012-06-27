@@ -2,7 +2,6 @@
 precision highp float;
 
 uniform mat4 modelMatrix;
-uniform mat4 mvMatrix;
 uniform mat4 mvpMatrix;
 uniform vec3 vLightPosition;
 uniform vec4 diffuseColor;

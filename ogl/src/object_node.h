@@ -4,11 +4,14 @@
 #include "scene_graph_node.h"
 #include "vertex_shader.h"
 #include "fragment_shader.h"
+#include "matrix_stack.h"
 #include "glm/gtc/matrix_transform.hpp"
+
+class Camera;
 
 class ObjectNode : public ISGNode {
 public:
-	virtual void Draw(float in_delta);
+	virtual void Draw(float in_delta, Camera const & in_camera);
 	void LoadObj(std::string in_meshLocation);
 	void LoadShaders(std::string in_vertexShaderLocation,
 									std::string in_fragmentShaderLocation);

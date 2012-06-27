@@ -9,6 +9,10 @@ std::shared_ptr<MatrixStack> MatrixStack::Instance() {
 	return m_pInstance;
 }
 
+void MatrixStack::Pop() {
+	m_stack.pop_back();
+}
+
 void MatrixStack::Push(glm::mat4 const & in_matrix) {
 	m_stack.push_back(in_matrix);
 }

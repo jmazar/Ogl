@@ -4,10 +4,11 @@
 #include <vector>
 #include <memory>
 
+class Camera;
 
 class ISGNode {
 public:
-	virtual void Draw(float in_delta) = 0;
+	virtual void Draw(float in_delta, Camera const & in_camera) = 0;
 
 
 private:

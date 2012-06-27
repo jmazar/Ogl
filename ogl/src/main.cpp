@@ -108,24 +108,19 @@ int WINAPI WinMain(
 	Renderer renderer;
 	renderer.Enable(hWnd);
 
-
-	//Loading an obj.
-
-
-	//Init
-
-
-
-
-
-
 	bool quit = false;
-	float theta = 0.0f;
 
+	Camera camera;
+	glm::vec3 eyeLocation(0.0f, 0.0f, 45.0f);
+	camera.SetCameraTranslation(eyeLocation);
 
-	ObjectNode object;
-	object.LoadObj("src\\models\\teapot2.mesh");
-	object.LoadShaders("src\\shaders\\vertex.glsl", "src\\shaders\\fragment.glsl");
+	renderer.AddCamera(camera);
+
+	std::shared_ptr<ISGNode> object;
+	object.reset(new ObjectNode());
+	dynamic_cast<ObjectNode*>(object.get())->LoadObj("src\\models\\teapot2.mesh");
+	dynamic_cast<ObjectNode*>(object.get())->LoadShaders("src\\shaders\\vertex.glsl", "src\\shaders\\fragment.glsl");
+	renderer.AddSceneGraphNode(object);
 
 
 	while( !quit ) {
@@ -139,14 +134,7 @@ int WINAPI WinMain(
 			}
 		}
 		else {
-			glClearColor( 1.0f, 1.0f, 1.0f, 1.0f);
-			glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-			object.Draw(theta);
-
 			renderer.Render();
-			
-			theta += 0.01;
 		}
 	}
 
