@@ -118,7 +118,7 @@ int WINAPI WinMain(
 
 	std::shared_ptr<ISGNode> object;
 	object.reset(new ObjectNode());
-	dynamic_cast<ObjectNode*>(object.get())->LoadObj("src\\models\\teapot2.mesh");
+	dynamic_cast<ObjectNode*>(object.get())->LoadObj("src\\models\\sphere.mesh");
 	dynamic_cast<ObjectNode*>(object.get())->LoadShaders("src\\shaders\\vertex.glsl", "src\\shaders\\fragment.glsl");
 	renderer.AddSceneGraphNode(object);
 
