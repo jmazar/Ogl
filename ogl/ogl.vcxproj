@@ -151,6 +151,7 @@
     <ClCompile Include="src\obj_loader.cpp" />
     <ClCompile Include="src\renderer.cpp" />
     <ClCompile Include="src\shader.cpp" />
+    <ClCompile Include="src\transform_node.cpp" />
     <ClCompile Include="src\vertex_shader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\scene_graph_node.h" />
     <ClInclude Include="src\shader.h" />
+    <ClInclude Include="src\transform_node.h" />
     <ClInclude Include="src\vertex_shader.h" />
   </ItemGroup>
   <ItemGroup>
