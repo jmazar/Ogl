@@ -20,9 +20,7 @@ private:
 	HDC m_hDC;
 	HGLRC m_hRC;
 	bool m_bInitialized;
-	std::vector<Camera> m_cameras;
-	unsigned int m_cameraToUse;
-	glm::mat4 m_projectionMatrix;
+	Camera m_camera;
 	std::shared_ptr<ISGNode> m_sceneGraphNode;
 
 };

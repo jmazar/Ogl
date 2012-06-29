@@ -3,15 +3,13 @@
 Renderer::Renderer() :
 m_hDC(0),
 m_hRC(0),
-m_bInitialized(false),
-m_cameraToUse(0) {
+m_bInitialized(false) {
 }
 
 Renderer::Renderer(HWND hWnd) :
 m_hDC(0),
 m_hRC(0),
-m_bInitialized(false),
-m_cameraToUse(0) {
+m_bInitialized(false) {
 			Enable(hWnd);
 }
 
@@ -47,7 +45,6 @@ void Renderer::Enable(HWND hWnd) {
 
 	glEnable(GL_DEPTH_TEST);
 
-	m_projectionMatrix = glm::perspective(60.0f, 640.0f / 480.0f, 0.1f, 100.f);
 
 	m_bInitialized = true;
 
@@ -58,7 +55,7 @@ void Renderer::AddSceneGraphNode(std::shared_ptr<ISGNode> in_node) {
 }
 
 void Renderer::AddCamera(Camera const & in_camera) {
-	m_cameras.push_back(in_camera);
+	m_camera = in_camera;
 }
 void Renderer::Disable(HWND hWnd) {
 	wglMakeCurrent( NULL, NULL );
@@ -71,10 +68,10 @@ void Renderer::Render() {
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
 	std::shared_ptr<MatrixStack> matrixStack = MatrixStack::Instance();
-	matrixStack->Push(m_projectionMatrix);
-	matrixStack->Push(m_cameras[m_cameraToUse].GetViewMatrix());
+	matrixStack->Push(m_camera.GetProjectionMatrix());
+	matrixStack->Push(m_camera.GetViewMatrix());
 
-	m_sceneGraphNode->Draw(0.0f, m_cameras[m_cameraToUse]);
+	m_sceneGraphNode->Draw(0.0f, m_camera);
 
 	matrixStack->Pop();
 	matrixStack->Pop();
