@@ -45,6 +45,9 @@
     <ClCompile Include="src\transform_node.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\shader_node.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\shader.h">
@@ -81,6 +84,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\transform_node.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\scene_graph.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shader_node.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

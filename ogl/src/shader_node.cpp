@@ -11,6 +11,11 @@ ShaderNode::~ShaderNode() {
 
 void ShaderNode::Draw(SceneGraph const & in_sceneGraph) {
 	in_sceneGraph.SetProgram(m_program);
+
+	for(auto iterator = m_children.begin(); iterator != m_children.end(); iterator++) {
+		(*iterator)->Draw(in_sceneGraph);
+	}
+
 }
 
 void ShaderNode::LoadShaders(std::string in_vertexShaderLocation,
