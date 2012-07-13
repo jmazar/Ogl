@@ -14,8 +14,6 @@ public:
 	void Enable(HWND hWnd);
 	void Disable(HWND hWnd);
 	void Render();
-	void AddCamera(Camera const & in_camera);
-	void AddSceneGraphNode(std::shared_ptr<ISGNode> in_node);
 private:
 	HDC m_hDC;
 	HGLRC m_hRC;

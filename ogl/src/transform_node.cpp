@@ -1,11 +1,14 @@
 #include "transform_node.h"
 #include "matrix_stack.h"
 
-void TransformNode::Render(float in_delta, Camera const & in_camera) {
+void TransformNode::Render(SceneGraph const & in_sceneGraph) {
 	MatrixStack::Instance()->Push(m_transform);
 
 	//Render children
-	
+	for(auto iterator = m_children.begin(); iterator != m_children.end(); iterator++) {
+		(*iterator)->Draw(in_sceneGraph);
+	}
+
 	MatrixStack::Instance()->Pop();
 }
 

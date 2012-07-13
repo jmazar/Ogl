@@ -4,16 +4,18 @@
 #include <vector>
 #include <memory>
 
-class Camera;
+class SceneGraph;
 
 class ISGNode {
 public:
-	virtual void Draw(float in_delta, Camera const & in_camera) = 0;
-	//TODO: Implement? Not sure how to deal with unique_ptr stuff...
-	//void AddChild(std::vector<std::unique_ptr<ISGNode>> const & in_child);
+	virtual void Draw(SceneGraph const & in_sceneGraph) = 0;
 
-private:
-	std::vector<std::unique_ptr<ISGNode>> m_children;
+	void AddChild(std::vector<std::shared_ptr<ISGNode>> const & in_child) {
+		m_children.push_back(in_child);
+	}
+
+protected:
+	std::vector<std::shared_ptr<ISGNode>> m_children;
 
 };
 

@@ -11,14 +11,14 @@ public:
 
 	void CreateShaderFromFile(std::string const & fileName);
 	void AttachToProgram(GLuint program);
-  void DetachFromProgram(GLuint program);
+	void DetachFromProgram(GLuint program);
 		
 protected:
-  void CompileShader();
-  void LoadShaderSource(std::string const & fileName);
+	void CompileShader();
+	void LoadShaderSource(std::string const & fileName);
 
-  std::string m_shaderSource;
-  GLuint      m_shader;
+	std::string m_shaderSource;
+	GLuint      m_shader;
 
 private:
 	virtual GLuint CreateShader() = 0;

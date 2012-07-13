@@ -6,7 +6,7 @@
 
 class TransformNode : public ISGNode {
 public:
-	void Render(float in_delta, Camera const & in_camera);
+	void Render(SceneGraph const & in_sceneGraph);
 	void SetTransform(glm::mat4 const & in_transform);
 private:
 	glm::mat4 m_transform;
